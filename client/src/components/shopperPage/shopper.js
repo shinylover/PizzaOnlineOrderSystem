@@ -5,18 +5,14 @@ import 'antd/dist/antd.css';
 
 import { AuthContext } from '../../auth/AuthContext';
 import NavigationBar from '../NavigationBar'
-import Pizzas from './pizzas'
+import ShopperOrders from './shopperOrders'
 
 const { Header, Footer,  Content } = Layout
 const DemoBox = props => <p className={`height-${props.value}`}>{props.children}</p>;
 
-class Visitor extends Component {
-    constructor(props) {
-        super(props)
-    }
+export default class Shopper extends Component {
     render() {
         return (
-            // TODO: add authUser
             <Fragment>
                 <Layout>
                     <Header>
@@ -25,9 +21,12 @@ class Visitor extends Component {
                     <Content>
                         <BrowserRouter>
                             <Switch>
-                                <Route exact path={'/visitor/menu'} >
-                                    <h2>worker</h2>
-                                    <Pizzas />
+                                <Route example={'/shopper/menu'}>
+                                    <h2>Shopper Menu</h2>
+                                </Route>
+                                <Route exact path={'/shopper/orders'} >
+                                    <h2>Shopper Order</h2>
+                                    <ShopperOrders />
                                     {/* <Divider orientation="left">Align Middle</Divider>
                                     <Row justify="space-around" align="middle">
                                         <Col span={4}>
@@ -49,10 +48,6 @@ class Visitor extends Component {
                 
 
             </Fragment>
-                
-            
         )
     }
 }
-
-export default withRouter(Visitor)

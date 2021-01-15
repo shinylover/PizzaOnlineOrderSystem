@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
-export default class shopperOrders extends Component {
+export default class ShopperOrders extends Component {
     render() {
         return (
             // TODO: add authUser

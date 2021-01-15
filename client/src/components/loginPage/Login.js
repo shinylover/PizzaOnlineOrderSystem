@@ -4,7 +4,6 @@ import {Row, Col, Form, Input, Button, Checkbox} from 'antd'
 import 'antd/dist/antd.css';
 
 import { AuthContext } from '../../auth/AuthContext';
-import Visitor from '../visitorPage/visitor'
 
 const DemoBox = props => <p className={`height-${props.value}`}>{props.children}</p>;
 

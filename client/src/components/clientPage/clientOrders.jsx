@@ -1,11 +1,16 @@
 import React, { Component, Fragment } from 'react'
+import { Card, Avatar, Row, Col } from 'antd';
+import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
-export default class clientOrders extends Component {
+const { Meta } = Card;
+
+export default class ClientOrders extends Component {
     render() {
         return (
             // TODO: add authUser
             <Fragment>
-                <h2>I am client orders</h2>
+                
+                
             </Fragment>
         )
     }

@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom';
 import {Switch} from 'react-router';
 
-import logo from './logo.svg';
 import '../src/styles/App.css';
 import { AuthContext } from './auth/AuthContext';
 import Login from './components/loginPage/Login';

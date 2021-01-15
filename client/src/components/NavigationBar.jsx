@@ -69,10 +69,7 @@ export default class NavigationBar extends Component {
                                         Menu
                                         <a href="/visitor/menu"/>
                                     </Menu.Item>
-                                    <Menu.Item key="app"  icon={<BookTwoTone />}>
-                                        Orders
-                                        <a href="/visitor/orders"/>
-                                    </Menu.Item>
+                                    
                                 
                                     <Menu.Item key="alipay">
                                     <a href="https://ant.design" target="_blank" rel="noopener noreferrer">

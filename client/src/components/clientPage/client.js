@@ -1,15 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import {  Route, Switch, withRouter, BrowserRouter } from 'react-router-dom';
-import { Layout, Row, Col, Divider } from 'antd';
+import { Layout, Row, Col, Divider, Space, Tooltip, Button } from 'antd';
 import 'antd/dist/antd.css';
 
 import { AuthContext } from '../../auth/AuthContext';
 import NavigationBar from '../NavigationBar'
+import ClientOrders from './clientOrders'
 import Pizzas from './pizzas'
-import clientOrders from './clientOrders'
+import OrdersControl from './ordersControl'
 
 const { Header, Footer,  Content } = Layout
 const DemoBox = props => <p className={`height-${props.value}`}>{props.children}</p>;
+const text = <span>If you order more than 3 pizzas(includes 3), you will get 10% discount of your total cost</span>;
 
 
 export default class Client extends Component {
@@ -20,29 +22,27 @@ export default class Client extends Component {
         return (
             // TODO: add authUser
             <Fragment>
-                <Layout>
+                <Layout >
                     <Header>
                         <NavigationBar/>
                     </Header>
-                    <Content>
+                    <Content style={{margin:50}}>
                         <BrowserRouter>
                             <Switch>
                                 <Route exact path={'/client/menu'} >
-                                    <h2>Client Menu</h2>
-                                    <Pizzas />
-                                    {/* <Divider orientation="left">Align Middle</Divider>
-                                    <Row justify="space-around" align="middle">
-                                        <Col span={4}>
-                                            <DemoBox value={100}>
-
-                                            </DemoBox>
-
-                                        </Col>
-                                    </Row> */}
+                                    <Space direction='vertical' size ='large'>
+                                        <Pizzas />
+                                        <Tooltip  placement="top" title={text}>
+                                            <Button type="primary" danger>
+                                                Discount Informations!
+                                            </Button>
+                                        </Tooltip>
+                                        <OrdersControl/>
+                                    </Space>
                                 </Route >
                                 <Route exact path={'/client/orders'}>
                                     <h2>Client Orders</h2>
-                                    <clientOrders/>
+                                    <ClientOrders />
                                 </Route>
                             </Switch>
                         
