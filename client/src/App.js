@@ -5,6 +5,10 @@ import {Switch} from 'react-router';
 import logo from './logo.svg';
 import '../src/styles/App.css';
 import { AuthContext } from './auth/AuthContext';
+import Login from './components/loginPage/Login';
+import Client from './components/clientPage/client';
+import Shopper from './components/shopperPage/shopper';
+import Visitor from './components/visitorPage/visitor';
 
 class App extends React.Component{
 
@@ -24,19 +28,22 @@ class App extends React.Component{
     
     return (
       <AuthContext.Provider value={value}>
-        <Header>
+        {/* <Header>
           Nothing
-        </Header>
+        </Header> */}
         <Router>
           <Switch>
             <Route exact path='/Login'>
-              {/* TODO: loginPage */}
+              <Login/>
             </Route>
-            <Route path='/Login'>
-              {/* TODO: clientPage */}
+            <Route path='/client'>
+              <Client/>
             </Route>
-            <Route  path='/Login'>
-              {/* TODO: shopperPage */}
+            <Route  path='/shopper'>
+              <Shopper/>
+            </Route>
+            <Route  path='/visitor'>
+              <Visitor/>
             </Route>
             <Route exact path='/'>
               <Redirect to= 'Login'/>
