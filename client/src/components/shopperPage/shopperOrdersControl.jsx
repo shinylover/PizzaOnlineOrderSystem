@@ -1,62 +1,66 @@
 import React, { Component, Fragment } from 'react'
-import { Drawer, Button, Col, Row, Select, InputNumber, Collapse, Slider, Space, Divider } from 'antd';
+import { Drawer, Button, Col, Row, Select, InputNumber, Collapse, Slider, Space} from 'antd';
 import { PlusOutlined, EuroCircleOutlined } from '@ant-design/icons';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 const { Option } = Select;
 
 const { Panel } = Collapse;
+
 const optionsS = [
-    { label: 'Olives', value: 1, disabled: false, selected:0},
-    { label: 'Ham', value: 1, disabled: false, selected:0},
-    { label: 'Bacon', value: 1, disabled: false, selected:0 },
-    { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
-    { label: 'Egg', value: 1, disabled: false, selected:0},
-    { label: 'Artichokes', value: 1, disabled: false, selected:0 },
-    { label: 'Chips', value: 1, disabled: false, selected:0},
-    { label: 'Vegetables', value: 1, disabled: false, selected:0 },
-    { label: 'Seafood', value: 2, disabled: true, selected:0 },
-    { label: 'Tomato', value: 0, disabled: false, selected:0 }
+    { label: 'Olives', value: 1, disabled: false },
+    { label: 'Ham', value: 1, disabled: false},
+    { label: 'Bacon', value: 1, disabled: false },
+    { label: 'Mushrooms', value: 1, disabled: false },
+    { label: 'Egg', value: 1, disabled: false},
+    { label: 'Artichokes', value: 1, disabled: false },
+    { label: 'Chips', value: 1, disabled: false},
+    { label: 'Vegetables', value: 1, disabled: false },
+    { label: 'Seafood', value: 2, disabled: true },
+    { label: 'Tomato', value: 0, disabled: false }
   ]
 
-export default class OrdersControl extends Component {
+const optionsM = [
+    { label: 'Olives', value: 1, disabled: false },
+    { label: 'Ham', value: 1, disabled: false},
+    { label: 'Bacon', value: 1, disabled: false },
+    { label: 'Mushrooms', value: 1, disabled: false },
+    { label: 'Egg', value: 1, disabled: false},
+    { label: 'Artichokes', value: 1, disabled: false },
+    { label: 'Chips', value: 1, disabled: false},
+    { label: 'Vegetables', value: 1, disabled: false },
+    { label: 'Seafood', value: 2, disabled: true },
+    { label: 'Tomato', value: 0, disabled: false }
+  ]
+
+const optionsL = [
+    { label: 'Olives', value: 1, disabled: false },
+    { label: 'Ham', value: 1, disabled: false},
+    { label: 'Bacon', value: 1, disabled: false },
+    { label: 'Mushrooms', value: 1, disabled: false },
+    { label: 'Egg', value: 1, disabled: false},
+    { label: 'Artichokes', value: 1, disabled: false },
+    { label: 'Chips', value: 1, disabled: false},
+    { label: 'Vegetables', value: 1, disabled: false },
+    { label: 'Seafood', value: 2, disabled: false },
+    { label: 'Tomato', value: 0, disabled: false }
+  ]
+
+export default class ShopperOrdersControl extends Component {
     constructor(props) {
         super(props)
         this.state = { visible: false,
             optionsS :[
-                { label: 'Olives', value: 1, disabled: false, selected:0},
-                { label: 'Ham', value: 1, disabled: false, selected:0},
-                { label: 'Bacon', value: 1, disabled: false, selected:0 },
-                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
-                { label: 'Egg', value: 1, disabled: false, selected:0},
-                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
-                { label: 'Chips', value: 1, disabled: false, selected:0},
-                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
-                { label: 'Seafood', value: 2, disabled: true, selected:0 },
-                { label: 'Tomato', value: 0, disabled: false, selected:0 }] ,
-              optionsM :[
-                { label: 'Olives', value: 1, disabled: false, selected:0},
-                { label: 'Ham', value: 1, disabled: false, selected:0},
-                { label: 'Bacon', value: 1, disabled: false, selected:0 },
-                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
-                { label: 'Egg', value: 1, disabled: false, selected:0},
-                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
-                { label: 'Chips', value: 1, disabled: false, selected:0},
-                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
-                { label: 'Seafood', value: 2, disabled: true, selected:0 },
-                { label: 'Tomato', value: 0, disabled: false, selected:0 }
-              ] ,
-              optionsL :[
-                { label: 'Olives', value: 1, disabled: false, selected:0},
-                { label: 'Ham', value: 1, disabled: false, selected:0},
-                { label: 'Bacon', value: 1, disabled: false, selected:0 },
-                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
-                { label: 'Egg', value: 1, disabled: false, selected:0},
-                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
-                { label: 'Chips', value: 1, disabled: false, selected:0},
-                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
-                { label: 'Seafood', value: 2, disabled: false, selected:0 },
-                { label: 'Tomato', value: 0, disabled: false, selected:0 }
+                { label: 'Olives', value: 1, disabled: false },
+                { label: 'Ham', value: 1, disabled: false},
+                { label: 'Bacon', value: 1, disabled: false },
+                { label: 'Mushrooms', value: 1, disabled: false },
+                { label: 'Egg', value: 1, disabled: false},
+                { label: 'Artichokes', value: 1, disabled: false },
+                { label: 'Chips', value: 1, disabled: false},
+                { label: 'Vegetables', value: 1, disabled: false },
+                { label: 'Seafood', value: 2, disabled: true },
+                { label: 'Tomato', value: 0, disabled: false }
               ] ,
               inputValue: 1,
               price: 4,
@@ -85,27 +89,6 @@ export default class OrdersControl extends Component {
           inputValue: value,
         });
       };
-    
-    selectToppings = (k)=>{
-        // TODO: slected
-        let arr = this.state.optionsS
-        arr[k] = JSON.parse(JSON.stringify(arr[k]))
-        arr[k].selected = '1'
-        console.log(arr)
-        this.setState({
-            optionsS: arr
-        })
-        // for(let os of this.state.optionsS){
-        //     if(s == os){
-        //         os = JSON.parse(JSON.stringify(os))
-        //         os.selected = 1
-        //     }
-        // }
-        // this.componentDidMount()
-    }
-    // componentDidMount(){
-
-    // }
 
     render() {
         const { inputValue } = this.state;
@@ -145,17 +128,19 @@ export default class OrdersControl extends Component {
                 <Collapse defaultActiveKey={['1']} onChange={this.callback}>
                     <Panel  header="S size" key="1">
                         <Row gutter={16}> 
-                           
                             <Col  span={24}>
                             Choose 2 toppings:
                             </Col>
-                            <Divider dashed={true}/>
-                            {this.state.optionsS.map((s, k) => {return <Col span={7}><Checkbox  onChange={this.selectToppings} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
-                            <Divider/>
+                            <br/>
+                            <br/>
+                            {optionsS.map((s) => {return <Col span={7}><Checkbox onChange={this.onChange} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                            <br/>
+                            <br/>
                             <Col  span={24}>
                             Pizza number:
                             </Col>
-                            <Divider dashed={true}/>
+                            <br/>
+                            <br/>
                             <Col span={12}>
                                 <Slider min={1} max={20} onChange={this.onChangeSlider} value={typeof inputValue === 'number' ? inputValue : 0} />
                             </Col>
@@ -168,7 +153,6 @@ export default class OrdersControl extends Component {
                                     onChange={this.onChangeSlider}
                                 />
                             </Col>
-                            <Divider/>
                             
                         </Row>
                           
@@ -180,13 +164,16 @@ export default class OrdersControl extends Component {
                             <Col  span={24}>
                             Chose 3 toppings:
                             </Col>
-                            <Divider dashed={true}/>
-                            {this.state.optionsM.map((s) => {return <Col span={7}><Checkbox onChange={this.onChange} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
-                            <Divider/>
+                            <br/>
+                            <br/>
+                            {optionsM.map((s) => {return <Col span={7}><Checkbox onChange={this.onChange} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                            <br/>
+                            <br/>
                             <Col  span={24}>
                             Pizza number:
                             </Col>
-                            <Divider dashed={true}/>
+                            <br/>
+                            <br/>
                             <Col span={12}>
                                 <Slider min={1} max={20} onChange={this.onChangeSlider} value={typeof inputValue === 'number' ? inputValue : 0} />
                             </Col>
@@ -199,7 +186,6 @@ export default class OrdersControl extends Component {
                                     onChange={this.onChangeSlider}
                                 />
                             </Col>
-                            <Divider/>
                             
                         </Row>   
                     </Panel >
@@ -208,13 +194,16 @@ export default class OrdersControl extends Component {
                             <Col  span={24}>
                             Chose 6 toppings:
                             </Col>
-                            <Divider dashed={true}/>
-                            {this.state.optionsL.map((s) => {return <Col span={7}><Checkbox onChange={this.onChange} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
-                            <Divider/>
+                            <br/>
+                            <br/>
+                            {optionsL.map((s) => {return <Col span={7}><Checkbox onChange={this.onChange} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                            <br/>
+                            <br/>
                             <Col  span={24}>
                             Pizza number:
                             </Col>
-                            <Divider dashed={true}/>
+                            <br/>
+                            <br/>
                             <Col span={12}>
                                 <Slider min={1} max={20} onChange={this.onChangeSlider} value={typeof inputValue === 'number' ? inputValue : 0} />
                             </Col>
@@ -227,7 +216,6 @@ export default class OrdersControl extends Component {
                                     onChange={this.onChangeSlider}
                                 />
                             </Col>
-                            <Divider/>
                             
                         </Row> 
                     </Panel >

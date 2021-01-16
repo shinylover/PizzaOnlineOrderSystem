@@ -41,8 +41,11 @@ export default class Client extends Component {
                                     </Space>
                                 </Route >
                                 <Route exact path={'/client/orders'}>
-                                    <h2>Client Orders</h2>
+                                    
                                     <ClientOrders />
+                                        
+                                    
+
                                 </Route>
                             </Switch>
                         

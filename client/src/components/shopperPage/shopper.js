@@ -7,6 +7,7 @@ import { AuthContext } from '../../auth/AuthContext';
 import NavigationBar from '../NavigationBar'
 import ShopperOrders from './shopperOrders'
 
+
 const { Header, Footer,  Content } = Layout
 const DemoBox = props => <p className={`height-${props.value}`}>{props.children}</p>;
 
@@ -18,14 +19,11 @@ export default class Shopper extends Component {
                     <Header>
                         <NavigationBar/>
                     </Header>
-                    <Content>
+                    <Content style={{margin:50}}>
                         <BrowserRouter>
                             <Switch>
-                                <Route example={'/shopper/menu'}>
-                                    <h2>Shopper Menu</h2>
-                                </Route>
                                 <Route exact path={'/shopper/orders'} >
-                                    <h2>Shopper Order</h2>
+                                    
                                     <ShopperOrders />
                                     {/* <Divider orientation="left">Align Middle</Divider>
                                     <Row justify="space-around" align="middle">
