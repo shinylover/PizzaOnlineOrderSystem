@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react'
-import { Drawer, Button, Col, Row, Select, InputNumber, Collapse, Slider, Space} from 'antd';
+import { Drawer, Button, Col, Row, Select, InputNumber, Collapse, Slider, Space, Divider } from 'antd';
 import { PlusOutlined, EuroCircleOutlined } from '@ant-design/icons';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 const { Option } = Select;
 
 const { Panel } = Collapse;
+<<<<<<< HEAD
 var sumForSamll =0
 var sumForMiddle = 0
 var sumForLarge =0
@@ -48,12 +49,27 @@ var counterForL = 0
 //     { label: 'Seafood', value: 2, disabled: false },
 //     { label: 'Tomato', value: 0, disabled: false }
 //   ]
+=======
+const optionsS = [
+    { label: 'Olives', value: 1, disabled: false, selected:0},
+    { label: 'Ham', value: 1, disabled: false, selected:0},
+    { label: 'Bacon', value: 1, disabled: false, selected:0 },
+    { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
+    { label: 'Egg', value: 1, disabled: false, selected:0},
+    { label: 'Artichokes', value: 1, disabled: false, selected:0 },
+    { label: 'Chips', value: 1, disabled: false, selected:0},
+    { label: 'Vegetables', value: 1, disabled: false, selected:0 },
+    { label: 'Seafood', value: 2, disabled: true, selected:0 },
+    { label: 'Tomato', value: 0, disabled: false, selected:0 }
+  ]
+>>>>>>> 306f9ee7d9ae3ca3a0a4dbd088d86e3a9975fa60
 
 export default class OrdersControl extends Component {
     constructor(props) {
         super(props)
         this.state = { visible: false,
             optionsS :[
+<<<<<<< HEAD
                 { label: 'Olives', value: 1, disabled: false, selected: 0},
                 { label: 'Ham', value: 1, disabled: false, selected: 0},
                 { label: 'Bacon', value: 1, disabled: false, selected: 0 },
@@ -64,6 +80,41 @@ export default class OrdersControl extends Component {
                 { label: 'Vegetables', value: 1, disabled: false, selected: 0 },
                 { label: 'Seafood', value: 2, disabled: true, selected: 0 },
                 { label: 'Tomato', value: 0, disabled: false, selected: 0 }
+=======
+                { label: 'Olives', value: 1, disabled: false, selected:0},
+                { label: 'Ham', value: 1, disabled: false, selected:0},
+                { label: 'Bacon', value: 1, disabled: false, selected:0 },
+                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
+                { label: 'Egg', value: 1, disabled: false, selected:0},
+                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
+                { label: 'Chips', value: 1, disabled: false, selected:0},
+                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
+                { label: 'Seafood', value: 2, disabled: true, selected:0 },
+                { label: 'Tomato', value: 0, disabled: false, selected:0 }] ,
+              optionsM :[
+                { label: 'Olives', value: 1, disabled: false, selected:0},
+                { label: 'Ham', value: 1, disabled: false, selected:0},
+                { label: 'Bacon', value: 1, disabled: false, selected:0 },
+                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
+                { label: 'Egg', value: 1, disabled: false, selected:0},
+                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
+                { label: 'Chips', value: 1, disabled: false, selected:0},
+                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
+                { label: 'Seafood', value: 2, disabled: true, selected:0 },
+                { label: 'Tomato', value: 0, disabled: false, selected:0 }
+              ] ,
+              optionsL :[
+                { label: 'Olives', value: 1, disabled: false, selected:0},
+                { label: 'Ham', value: 1, disabled: false, selected:0},
+                { label: 'Bacon', value: 1, disabled: false, selected:0 },
+                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
+                { label: 'Egg', value: 1, disabled: false, selected:0},
+                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
+                { label: 'Chips', value: 1, disabled: false, selected:0},
+                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
+                { label: 'Seafood', value: 2, disabled: false, selected:0 },
+                { label: 'Tomato', value: 0, disabled: false, selected:0 }
+>>>>>>> 306f9ee7d9ae3ca3a0a4dbd088d86e3a9975fa60
               ] ,
               optionsM: [
                 { label: 'Olives', value: 1, disabled: false, selected: 0},
@@ -133,6 +184,27 @@ export default class OrdersControl extends Component {
           inputValueForL: value,
         });
       };
+    
+    selectToppings = (k)=>{
+        // TODO: slected
+        let arr = this.state.optionsS
+        arr[k] = JSON.parse(JSON.stringify(arr[k]))
+        arr[k].selected = '1'
+        console.log(arr)
+        this.setState({
+            optionsS: arr
+        })
+        // for(let os of this.state.optionsS){
+        //     if(s == os){
+        //         os = JSON.parse(JSON.stringify(os))
+        //         os.selected = 1
+        //     }
+        // }
+        // this.componentDidMount()
+    }
+    // componentDidMount(){
+
+    // }
 
     onChangeCheckBoxForM =(key)=>{
         const _options = this.state.optionsM
@@ -323,19 +395,25 @@ export default class OrdersControl extends Component {
                 <Collapse defaultActiveKey={['1']} onChange={this.callback}>
                     <Panel  header="S size" key="1">
                         <Row gutter={16}> 
+                           
                             <Col  span={24}>
                             Choose 2 toppings:
                             </Col>
+<<<<<<< HEAD
                             <br/>
                             <br/>
                             {this.state.optionsS.map((s,kForSmall) => {return <Col span={7}><Checkbox onChange={this.onChangeCheckBox.bind(this, kForSmall)} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
                             <br/>
                             <br/>
+=======
+                            <Divider dashed={true}/>
+                            {this.state.optionsS.map((s, k) => {return <Col span={7}><Checkbox  onChange={this.selectToppings} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                            <Divider/>
+>>>>>>> 306f9ee7d9ae3ca3a0a4dbd088d86e3a9975fa60
                             <Col  span={24}>
                             Pizza number:
                             </Col>
-                            <br/>
-                            <br/>
+                            <Divider dashed={true}/>
                             <Col span={12}>
                                 <Slider min={0} max={this.state.maxForS} onChange={this.onChangeSliderForS} value={typeof inputValueForS === 'number' ? inputValueForS : 0} />
                             </Col>
@@ -348,6 +426,7 @@ export default class OrdersControl extends Component {
                                     onChange={this.onChangeSliderForS}
                                 />
                             </Col>
+                            <Divider/>
                             
                         </Row>
                           
@@ -359,16 +438,21 @@ export default class OrdersControl extends Component {
                             <Col  span={24}>
                             Chose 3 toppings:
                             </Col>
+<<<<<<< HEAD
                             <br/>
                             <br/>
                             {this.state.optionsM.map((s,kForMiddle) => {return <Col span={7}><Checkbox onChange={this.onChangeCheckBoxForM.bind(this, kForMiddle)} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
                             <br/>
                             <br/>
+=======
+                            <Divider dashed={true}/>
+                            {this.state.optionsM.map((s) => {return <Col span={7}><Checkbox onChange={this.onChange} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                            <Divider/>
+>>>>>>> 306f9ee7d9ae3ca3a0a4dbd088d86e3a9975fa60
                             <Col  span={24}>
                             Pizza number:
                             </Col>
-                            <br/>
-                            <br/>
+                            <Divider dashed={true}/>
                             <Col span={12}>
                                 <Slider min={0} max={this.state.maxForM} onChange={this.onChangeSliderForM} value={typeof inputValueForM === 'number' ? inputValueForM : 0} />
                             </Col>
@@ -381,6 +465,7 @@ export default class OrdersControl extends Component {
                                     onChange={this.onChangeSliderForM}
                                 />
                             </Col>
+                            <Divider/>
                             
                         </Row>   
                     </Panel >
@@ -389,16 +474,21 @@ export default class OrdersControl extends Component {
                             <Col  span={24}>
                             Chose 6 toppings:
                             </Col>
+<<<<<<< HEAD
                             <br/>
                             <br/>
                             {this.state.optionsL.map((s,kForLarge) => {return <Col span={7}><Checkbox onChange={this.onChangeCheckBoxForL.bind(this, kForLarge)} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
                             <br/>
                             <br/>
+=======
+                            <Divider dashed={true}/>
+                            {this.state.optionsL.map((s) => {return <Col span={7}><Checkbox onChange={this.onChange} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                            <Divider/>
+>>>>>>> 306f9ee7d9ae3ca3a0a4dbd088d86e3a9975fa60
                             <Col  span={24}>
                             Pizza number:
                             </Col>
-                            <br/>
-                            <br/>
+                            <Divider dashed={true}/>
                             <Col span={12}>
                                 <Slider min={0} max={this.state.maxForL} onChange={this.onChangeSliderForL} value={typeof inputValueForL === 'number' ? inputValueForL : 0} />
                             </Col>
@@ -411,6 +501,7 @@ export default class OrdersControl extends Component {
                                     onChange={this.onChangeSliderForL}
                                 />
                             </Col>
+                            <Divider/>
                             
                         </Row> 
                     </Panel >

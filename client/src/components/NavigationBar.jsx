@@ -47,11 +47,7 @@ export default class NavigationBar extends Component {
                             </Route>
                             <Route path='/shopper'>
                             <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal">
-                                    <Menu.Item key="mail" icon={<MenuOutlined />}>
-                                        Menu
-                                        <a href="/shopper/menu"/>
-                                    </Menu.Item>
-                                    <Menu.Item key="app" icon={<BookTwoTone />}>
+                                    <Menu.Item key="mail" icon={<BookTwoTone />}>
                                         Orders
                                         <a href="/shopper/orders"/>
                                     </Menu.Item>
