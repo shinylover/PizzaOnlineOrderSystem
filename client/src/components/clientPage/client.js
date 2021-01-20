@@ -22,6 +22,7 @@ export default class Client extends Component {
             pizzas:[],
             orders:[],
             bookings:[],
+            current: null
         }
     }
 
@@ -38,10 +39,18 @@ export default class Client extends Component {
         } 
     }
 
+    // TODO: 
+    handleCurrent = (current)=>{
+        this.setState({
+            current: current
+        })
+    }
+
     putMakeOrdine = (ordine) =>{
         ClientApi.putMakeOrdine(ordine)
             .then((result) => {
-                alert('putMakeOrdine, ok')
+                // alert('putMakeOrdine, ok')
+                console.log('ClientApi.putMakeOrdine(ordine) OK!');
             })
             .catch((err) => {
                 this.handleErrors(err)
@@ -78,6 +87,10 @@ export default class Client extends Component {
 
     componentDidMount(){
         this.getPizzaInfos()
+        for(let i = 0; i <10000; i++){
+            let item = 1
+            // cost cpu resource 
+        }
         this.timeId = setInterval(() => {
             this.getPizzaInfos()
         }, 5000)
@@ -86,7 +99,7 @@ export default class Client extends Component {
 
     render() {
         return (
-            // TODO: add authUser
+           
             <AuthContext.Consumer>
                 {(context) => (
                     <Fragment>
@@ -118,6 +131,7 @@ export default class Client extends Component {
                                                 <ClientOrders 
                                                 pizzas={this.state.pizzas}
                                                 email = {context.authUser.email}
+                                                putMakeOrdine = {this.putMakeOrdine}
                                                  />
                                             </Route>
                                         </Switch>

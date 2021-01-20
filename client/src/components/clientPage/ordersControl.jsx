@@ -72,8 +72,9 @@ export default class OrdersControl extends Component {
             states: 0,
             sum: this.state.price
         }
+        let num =0 
         if (this.state.inputValueForS !==0){
-            bookings[0] = {
+            bookings[num] = {
                 ref_pizza: 1,
                 olives: this.state.optionsS[0].selected,
                 ham: this.state.optionsS[1].selected,
@@ -89,9 +90,10 @@ export default class OrdersControl extends Component {
                 numpizza: this.state.inputValueForS,
                 cost: 0
             }
+            num = num + 1
         }
         if (this.state.inputValueForM !==0){
-            bookings[1] = {
+            bookings[num] = {
                 ref_pizza: 2,
                 olives: this.state.optionsM[0].selected,
                 ham: this.state.optionsM[1].selected,
@@ -107,9 +109,10 @@ export default class OrdersControl extends Component {
                 numpizza: this.state.inputValueForM,
                 cost: 0
             }
+            num = num + 1
         }
         if (this.state.inputValueForL !==0) {
-            bookings[2] = {
+            bookings[num] = {
                 ref_pizza: 3,
                 olives: this.state.optionsL[0].selected,
                 ham: this.state.optionsL[1].selected,
@@ -125,20 +128,22 @@ export default class OrdersControl extends Component {
                 numpizza: this.state.inputValueForL,
                 cost: 0
             }
+            num = num + 1
         }
         let count = 0 
         let countCostrian = 0
         for(let booking of bookings) {
             if(booking.ref_pizza === 1){
                 const _options = this.state.optionsS
-                countCostrian = countCostrian + 2 * booking.numpizza
+                countCostrian = countCostrian + (2 * booking.numpizza)
+                
                 _options.map((s) => {
                     if(s.selected===1){
                         count = count + s.value * booking.numpizza
                     }
                 })
             }
-            if(booking.ref_pizza === 1){
+            if(booking.ref_pizza === 2){
                 const _options = this.state.optionsM
                 countCostrian = countCostrian + 3 * booking.numpizza
                 _options.map((s) => {
@@ -147,7 +152,7 @@ export default class OrdersControl extends Component {
                     }
                 })
             }
-            if(booking.ref_pizza === 1){
+            if(booking.ref_pizza === 3){
                 const _options = this.state.optionsL
                 countCostrian = countCostrian + 6 * booking.numpizza
                 _options.map((s) => {
@@ -158,7 +163,7 @@ export default class OrdersControl extends Component {
             }
         }
         if( count !== countCostrian){
-            alert('Please choose all of your toppings')
+            alert('Please choose all of your toppings'+count+'---countCostrian'+countCostrian)
         } else{
             this.setState({
                 ordine : {
@@ -216,7 +221,6 @@ export default class OrdersControl extends Component {
       };
     
     selectToppings = (k)=>{
-        // TODO: slected
         let arr = this.state.optionsS
         arr[k] = JSON.parse(JSON.stringify(arr[k]))
         arr[k].selected = '1'

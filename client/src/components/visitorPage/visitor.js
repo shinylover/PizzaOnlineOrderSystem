@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 import { AuthContext } from '../../auth/AuthContext';
 import NavigationBar from '../NavigationBar'
 import Pizzas from './pizzas'
+import VisitorApi from '../../api/visitorApi'
 
 
 
@@ -16,7 +17,48 @@ const text = <span>If you order more than 3 pizzas(includes 3), you will get 10%
 class Visitor extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            pizzas:[],
+        }
     }
+
+    handleErrors = (err) => {
+        if (err) {
+            if (err.status && err.status ===401) {
+                this.setState({ authErr: err });
+                this.props.history.push("/");
+            } else {
+                this.setState({
+                    authErr: err
+                })
+            }
+        } 
+    }
+
+    getPizzaInfos = () =>{
+        VisitorApi.getPizzaInfos()
+            .then((result) => {
+                
+                this.setState({
+                    pizzas: result
+                })
+            }).catch((err) => {
+                this.handleErrors(err)
+            })
+    }
+
+    componentDidMount(){
+        this.getPizzaInfos()
+        for(let i = 0; i <10000; i++){
+            let item = 1
+            // cost cpu resource 
+        }
+        this.timeId = setInterval(() => {
+            this.getPizzaInfos()
+        }, 5000)
+        
+    }
+
     render() {
         return (
             // TODO: add authUser
@@ -30,7 +72,7 @@ class Visitor extends Component {
                             <Switch>
                                 <Route exact path={'/visitor/menu'} >
                                     <Space direction='vertical' size ='large'>
-                                        <Pizzas />
+                                        <Pizzas  pizzas={this.state.pizzas}/>
                                         <Tooltip  placement="top" title={text}>
                                             <Button type="primary" danger>
                                                 Discount Informations!

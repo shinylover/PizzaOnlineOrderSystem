@@ -1,89 +1,87 @@
 import React, { Component, Fragment } from 'react'
-import { Card, Table,  Tag, Space} from 'antd';
 
-import ShopperOrdersControl from './shopperOrdersControl'
+import ShopperApi from '../../api/shopperApi'
+import ShopperOrderItem from './shopperOrderItem'
 
-const { Meta } = Card;
-
-const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <a>{text}</a>,
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <ShopperOrdersControl/>
-        </Space>
-      ),
-    },
-  ];
 
 export default class ShopperOrders extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      orders: [],
+      display: false,
+      rerender: null
+    }
+  }
+
+  // get all the orders 
+  getOrders=()=> {
+    ShopperApi.getOrders()
+      .then((result) => {
+        this.setState({
+            orders: result
+        })
+      })
+      .catch((err) => {
+        this.setState({
+          display: false
+        })
+          this.handleErrors(err)
+      })
+  }
+
+  handleRerender=(value)=> {
+    this.setState({
+      rerender: value
+    })
+    window.location.reload(); 
+  }
+
+  handleErrors = (err) => {
+    if (err) {
+        if (err.status && err.status ===401) {
+            this.setState({ authErr: err });
+            this.props.history.push("/");
+        } else {
+            this.setState({
+                authErr: err
+            })
+        }
+    } 
+  }
+  componentDidMount(){
+    this.getOrders();
+  }
     render() {
         return (
             // TODO: add authUser
             <Fragment>
-                <Table columns={columns} dataSource={data}/>
+                <table border="1" cellspacing="1000"  width="800">
+                  <thead>
+                    <tr>
+                      
+                      <th>Order Number</th>
+                      <th>Client</th>
+                      <th>Order Time</th>
+                      <th>Price</th>
+                      <th>States</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                      {this.state.display ? null: this.state.orders.map((o, key) =><ShopperOrderItem 
+                                                          order ={o} 
+                                                          num={key} 
+                                                          pizzas={this.props.pizzas}
+                                                          putMakeOrdine = {this.props.putMakeOrdine}
+                                                          email = { this.props.email}
+                                                          handleRerender = {this.handleRerender}
+                                                          />)}
+                    
+                    
+                  </tbody>
+                </table>
                 
             </Fragment>
         )

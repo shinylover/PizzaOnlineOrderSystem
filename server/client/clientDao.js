@@ -1,5 +1,6 @@
 'use strict';
 
+const { resume } = require('npmlog');
 const db = require('../DB/OpenDB')
 
 const getUserId = function (email) {
@@ -35,14 +36,14 @@ exports.makeOrdine = function (body) {
     return new Promise( (resolve, reject) => {
         const order = body.ordine.order
         const bookings = body.ordine.bookings
-        console.log('form clientDao++++++++++', bookings[0]);
-        console.log('form clientDao++++++++++ bookings[0].ref_pizza', bookings[0].ref_pizza);
+        
         let findIdSql = `SELECT uid FROM user WHERE email = ?`
         db.get(findIdSql, [order.email], (err, row) => {
             if (err) {
                 console.log(err);
                 reject(-1)
             } else {
+                
                 const id = row.uid
                 let makeOrder = `INSERT INTO orders (ref_user, timestam, states, sum) VALUES (?, ?, ?, ?)`
                 db.run(makeOrder, [id, order.timestam, order.states, order.sum], (err2) => {
@@ -75,7 +76,24 @@ exports.makeOrdine = function (body) {
                                                     reject(-4)
                                                 }
                                             } )
-                            
+                            // let availableNum = 
+                            const pid = booking.ref_pizza
+                            let getNum = `SELECT available FROM pizza WHERE pid = ?`
+                            db.get(getNum, [pid], (err5, row5) => {
+                                if(err5){
+                                    console.log('-------err5', err5);
+                                    reject(-5)
+                                } else {
+                                    let availableNum = row5.available - booking.numpizza
+                                    let updatePizza = `UPDATE pizza SET available = ? WHERE pid = ?`
+                                    db.run(updatePizza, [availableNum, pid], (err6) =>{
+                                        if (err6) {
+                                            console.log('-------err6', err6);
+                                            reject(-6)
+                                        }
+                                    })
+                                }
+                            })
                         }
                         resolve(1)
                     }
@@ -102,10 +120,10 @@ exports.getOrders = function(email) {
                         console.log('from clientDao----', err1);
                         reject(-1)
                     } else if (rows.length == 0){
-                        console.log('from clientDao ', rows.length)
-                        reject(0)
+                        // console.log('from clientDao ', rows.length)
+                        resolve(0)
                     } else {
-                        console.log('from clientDao ', rows)
+                        // console.log('from clientDao ', rows)
                         resolve(rows)
                     }
                 })
@@ -131,8 +149,22 @@ exports.getBookings = function (orderId) {
                 console.log('from clientDao-- getBookings-- ', rows.length)
                 reject(0)
             } else {
-                console.log('from clientDao-- getBookings-- ', rows)
+                // console.log('from clientDao-- getBookings-- ', rows)
                 resolve(rows)
+            }
+        })
+    })
+}
+
+exports.changeStates = function (orderId, states) {
+    return new Promise( (resolve, reject) => {
+        let sql = `UPDATE orders SET states = ? WHERE oid = ?`
+        db.run(sql, [states, orderId], (err) => {
+            if (err){
+                console.log('from clientDao-- changeStates--',err)
+                reject(-1) 
+            } else {
+                resolve(1)
             }
         })
     })

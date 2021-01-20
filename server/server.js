@@ -161,4 +161,98 @@ app.get('/clientApi/getBookings/:orderId', (req, res) =>{
         } )
 })
 
+// To update the status of a given order
+app.post('/clientApi/changeStates/:orderId', (req, res) =>{
+    const orderId = req.params.orderId
+    const states  = req.body.states
+    clientDao.changeStates(orderId, states)
+        .then( (results) => {
+            res.status(200).json(results)
+        })
+        .catch( ( err)=>{
+            console.log('From server', err);
+            res.status(500).json( {
+                errors: 'Server err, /clientApi/getOrders'
+            })
+        } )
+})
+
+
+// ## shopper page
+
+// To get all the orders 
+app.get('/shopperApi/getOrders', (req, res) =>{
+    shopperDao.getOrders()
+        .then( (rows) => {
+            res.status(200).json(rows)
+        })
+        .catch( ( err)=>{
+            console.log('From server', err);
+            res.status(500).json( {
+                errors: 'Server err, /shopperApi/getOrders'
+            })
+        } )
+})
+
+app.get('/shopperApi/getBookings/:orderId', (req, res) =>{
+    const orderId = req.params.orderId
+    shopperDao.getBookings(orderId)
+        .then( (rows) => {
+            res.status(200).json(rows)
+        })
+        .catch( ( err)=>{
+            console.log('From server', err);
+            res.status(500).json( {
+                errors: 'Server err, /shopperApi/getBookings/:orderId'
+            })
+        } )
+})
+
+// To get the informations of each type pizza
+app.get( '/shopperApi/getPizzaInfos', (req, res) => {
+    shopperDao.getAvailableNums()
+        .then( ( pizzas ) => {
+            
+            res.json(pizzas)
+        })
+        .catch( ( err)=>{
+            res.status(500).json( {
+                errors: [ {'message': err}]
+            })
+        } )
+})
+
+// To update the status of a given order
+app.post('/shopperApi/changeStates/:orderId', (req, res) =>{
+    const orderId = req.params.orderId
+    const states  = req.body.states
+    shopperDao.changeStates(orderId, states)
+        .then( (results) => {
+            res.status(200).json(results)
+        })
+        .catch( ( err)=>{
+            console.log('From server', err);
+            res.status(500).json( {
+                errors: 'Server err, /shopperApi/getOrders'
+            })
+        } )
+})
+
+
+// ## Visitor page
+
+app.get( '/visitorApi/getPizzaInfos', (req, res) => {
+    console.log('/visitorApi/getPizzaInfos-------------', );
+    clientDao.getAvailableNums()
+        .then( ( pizzas ) => {
+            res.json(pizzas)
+        })
+        .catch( ( err)=>{
+            res.status(500).json( {
+                errors: [ {'message': err}]
+            })
+        } )
+})
+
+
 app.listen(PORT, ()=>console.log(`Server running on http://localhost:${PORT}/`));

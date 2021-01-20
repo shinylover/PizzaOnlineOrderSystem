@@ -65,8 +65,8 @@ export default class Pizzas extends Component {
                                                 <DownOutlined/>
                                             </Button>
                                         </Dropdown>
-                                        <Button>Available:10</Button>
-                                        <Button><EuroCircleOutlined />4 </Button>
+                                        <Button>Available:8</Button>
+                                        <Button><EuroCircleOutlined />6 </Button>
                                     </Space>
                                 ]}
                             >
@@ -97,8 +97,8 @@ export default class Pizzas extends Component {
                                                 <DownOutlined/>
                                             </Button>
                                         </Dropdown>
-                                        <Button>Available:10</Button>
-                                        <Button><EuroCircleOutlined />4 </Button>
+                                        <Button>Available:6</Button>
+                                        <Button><EuroCircleOutlined />10 </Button>
                                     </Space>
                                 ]}
                             >

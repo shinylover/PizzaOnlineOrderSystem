@@ -93,11 +93,47 @@ async function getBookings(orderId) {
     }
 }
 
+async function changeStates(orderId, states) {
+    return new Promise((resolve, reject) => {
+        fetch(baseURL + '/changeStates/' + orderId, {
+            method: 'POST',
+           headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify( {
+                orderId: orderId,
+                states: states
+                                   } ) 
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response)
+            } else {
+                //
+                console.log( "error:  changeStates(orderId)" )
+                response.json()
+                        .then( ( obj ) => {
+                            reject( obj )
+                        } )
+                        .catch( ( err ) => {
+                            reject( {
+                                        errors: [ {
+                                            err: err,
+                                            param: "Application",
+                                            msg: "changeStates(orderId) Cannot parse server response"
+                                        } ]
+                                    } )
+                        } );
+            }
+        })
+    })
+}
+
 const ClientApi ={
     getPizzaInfos,
     putMakeOrdine,
     getOrders,
-    getBookings
+    getBookings,
+    changeStates
 
 }
 

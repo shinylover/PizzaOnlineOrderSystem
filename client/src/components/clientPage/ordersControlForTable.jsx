@@ -76,8 +76,9 @@ export default class OrdersControlForTable extends Component {
             states: 0,
             sum: this.state.price
         }
+        let num =0 
         if (this.state.inputValueForS !==0){
-            bookings[0] = {
+            bookings[num] = {
                 ref_pizza: 1,
                 olives: this.state.optionsS[0].selected,
                 ham: this.state.optionsS[1].selected,
@@ -93,9 +94,10 @@ export default class OrdersControlForTable extends Component {
                 numpizza: this.state.inputValueForS,
                 cost: 0
             }
+            num = num + 1
         }
         if (this.state.inputValueForM !==0){
-            bookings[1] = {
+            bookings[num] = {
                 ref_pizza: 1,
                 olives: this.state.optionsM[0].selected,
                 ham: this.state.optionsM[1].selected,
@@ -111,9 +113,10 @@ export default class OrdersControlForTable extends Component {
                 numpizza: this.state.inputValueForM,
                 cost: 0
             }
+            num = num + 1
         }
         if (this.state.inputValueForL !==0) {
-            bookings[2] = {
+            bookings[num] = {
                 ref_pizza: 1,
                 olives: this.state.optionsL[0].selected,
                 ham: this.state.optionsL[1].selected,
@@ -129,6 +132,7 @@ export default class OrdersControlForTable extends Component {
                 numpizza: this.state.inputValueForL,
                 cost: 0
             }
+            num = num + 1
         }
         let count = 0 
         let countCostrian = 0
@@ -142,7 +146,7 @@ export default class OrdersControlForTable extends Component {
                     }
                 })
             }
-            if(booking.ref_pizza === 1){
+            if(booking.ref_pizza === 2){
                 const _options = this.state.optionsM
                 countCostrian = countCostrian + 3 * booking.numpizza
                 _options.map((s) => {
@@ -151,7 +155,7 @@ export default class OrdersControlForTable extends Component {
                     }
                 })
             }
-            if(booking.ref_pizza === 1){
+            if(booking.ref_pizza === 3){
                 const _options = this.state.optionsL
                 countCostrian = countCostrian + 6 * booking.numpizza
                 _options.map((s) => {
@@ -171,6 +175,7 @@ export default class OrdersControlForTable extends Component {
                 },
                 visible: false
             },()=>{
+                this.changeStates()
                 return this.props.putMakeOrdine(this.state.ordine)
             })
         }
@@ -405,7 +410,17 @@ export default class OrdersControlForTable extends Component {
             })
     }
 
-    // TODO:
+    changeStates = () => {
+        ClientApi.changeStates(this.props.order.oid, 3)
+            .then((response) => {
+                // TODO: delete
+                // alert('changeStates'+ response)
+            })
+            .catch((err) => {
+                alert(err)
+            })
+    }
+
     updateOptions = ()=> {
         const {bookings, optionsL, optionsM, optionsS} = this.state;
         if(this.props.order.states>=2){
@@ -447,7 +462,7 @@ export default class OrdersControlForTable extends Component {
                     _options[9].selected = 1
                     _options[9].defaultChecked = true
                 }
-                alert(_options[3].selected, _options[3].defaultChecked)
+                // alert(_options[3].selected, _options[3].defaultChecked)
                 console.log('----------------',_options[3].selected, _options[3].defaultChecked);
                 this.setState({
                     optionsS: [..._options],
@@ -642,7 +657,7 @@ export default class OrdersControlForTable extends Component {
                                     <Col span={4}>
                                         <InputNumber
                                             min={0}
-                                            max={order.states===2? this.props.pizzas[1].available: maxNumForS}
+                                            max={order.states===2? this.props.pizzas[1].available: maxNumForM}
                                             style={{ margin: '0 16px' }}
                                             value={inputValueForM}
                                             onChange={this.onChangeSliderForM}
@@ -674,7 +689,7 @@ export default class OrdersControlForTable extends Component {
                                     <Col span={4}>
                                         <InputNumber
                                             min={0}
-                                            max={order.states===2? this.props.pizzas[2].available: maxNumForS}
+                                            max={order.states===2? this.props.pizzas[2].available: maxNumForL}
                                             style={{ margin: '0 16px' }}
                                             value={inputValueForL}
                                             onChange={this.onChangeSliderForL}

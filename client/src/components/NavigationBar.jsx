@@ -7,12 +7,11 @@ import 'antd/dist/antd.css';
 
 import { AuthContext } from '../auth/AuthContext'
 
-
 export default class NavigationBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            current:'mail'
+            current: null
         }
     }
 
@@ -39,13 +38,10 @@ export default class NavigationBar extends Component {
                                     </Menu.Item>
                                 
                                     <Menu.Item key="alipay">
-                                    <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-                                        Navigation Four - Link
+                                    <a href="/" to='/' onClick={() => context.logoutUser()}>
+                                    Logout
                                     </a>
                                     </Menu.Item>
-                                    <Link to='/' onClick={() => { context.logout()}}>
-                                        Logout
-                                    </Link>
                                 </Menu>
                             </Route>
                             <Route path='/shopper'>
@@ -56,13 +52,11 @@ export default class NavigationBar extends Component {
                                     </Menu.Item>
                                 
                                     <Menu.Item key="alipay">
-                                    <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-                                        Navigation Four - Link
+                                    <a href="/" to='/' onClick={() => context.logoutUser()}>
+                                    Logout
                                     </a>
                                     </Menu.Item>
-                                    <Link to='/' onClick={() => { context.logout()}}>
-                                        Logout
-                                    </Link>
+                                    
                                 </Menu>
                             </Route>
                             <Route path='/visitor'>
@@ -74,13 +68,11 @@ export default class NavigationBar extends Component {
                                     
                                 
                                     <Menu.Item key="alipay">
-                                    <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-                                        Navigation Four - Link
+                                    <a href="/" to='/' onClick={() => context.logoutUser()}>
+                                    Login
                                     </a>
                                     </Menu.Item>
-                                    <Link to='/' onClick={() => { context.logout()}}>
-                                        Logout
-                                    </Link>
+                                    
                                 </Menu>
                             </Route>
                         </Switch>
