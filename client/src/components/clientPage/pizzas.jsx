@@ -9,6 +9,10 @@ import MenuL from '../../tools/dropDownForL'
 const { Meta } = Card;
 
 export default class Pizzas extends Component {
+    constructor(props){
+        super(props)
+
+    }
     render() {
         return (
             // TODO: add authUser
@@ -33,8 +37,8 @@ export default class Pizzas extends Component {
                                                 <DownOutlined/>
                                             </Button>
                                         </Dropdown>
-                                        <Button>Available:10</Button>
-                                        <Button><EuroCircleOutlined />4 </Button>
+                                        <Button>Available:{this.props.pizzas[0].available}</Button>
+                                        <Button><EuroCircleOutlined />{this.props.pizzas[0].price} </Button>
                                     </Space>
                                 ]}
                             >
@@ -65,8 +69,8 @@ export default class Pizzas extends Component {
                                                 <DownOutlined/>
                                             </Button>
                                         </Dropdown>
-                                        <Button>Available:10</Button>
-                                        <Button><EuroCircleOutlined />4 </Button>
+                                        <Button>Available:{this.props.pizzas[1].available}</Button>
+                                        <Button><EuroCircleOutlined />{this.props.pizzas[1].price} </Button>
                                     </Space>
                                 ]}
                             >
@@ -97,8 +101,8 @@ export default class Pizzas extends Component {
                                                 <DownOutlined/>
                                             </Button>
                                         </Dropdown>
-                                        <Button>Available:10</Button>
-                                        <Button><EuroCircleOutlined />4 </Button>
+                                        <Button>Available:{this.props.pizzas[2].available}</Button>
+                                        <Button><EuroCircleOutlined />{this.props.pizzas[2].price} </Button>
                                     </Space>
                                 ]}
                             >

@@ -1,8 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import {Switch} from 'react-router';
 
 import '../src/styles/App.css';
+import LoginApi from './api/loginApi'
+import User from './entities/User'
 import { AuthContext } from './auth/AuthContext';
 import Login from './components/loginPage/Login';
 import Client from './components/clientPage/client';
@@ -14,19 +16,44 @@ class App extends React.Component{
   constructor(props) {
     super(props);
     this.state = {}
+
+    this.login = this.login.bind(this)
+    this.logout = this.logout.bind(this)
+  }
+
+  componentDidMount(){
+    LoginApi.isAuthenticated().then((user) => {
+      this.setState({ authUser: user})
+    }).catch( (err)=>{
+      this.setState({ authErr: err})
+    })
   }
   
-  render() {
+  login = (email, password)=> {
+    LoginApi.login(email, password).then((user)=> {
+      this.setState({
+        authUser: new User(user.id, user.email,user.type),
+        authErr: null
+      })
+    }).catch( (err) => {
+        this.setState({ authErr: err})
+    })
+  }
 
-    const value = {
-      authUser: this.state.authUser,
-      authErr: this.state.authErr,
-      loginUser: this.login,
-      logoutUser: this.logout
-    }
+  logout = () =>{
+    LoginApi.logout().then(() => {
+      this.setState({authUser: null, authErr: null})
+    })
+  }
+
+  render() {
     
     return (
-      <AuthContext.Provider value={value}>
+      <AuthContext.Provider value={{
+        authUser: this.state.authUser,
+        authErr: this.state.authErr,
+        loginUser: this.login,
+        logoutUser: this.logout}}>
         {/* <Header>
           Nothing
         </Header> */}

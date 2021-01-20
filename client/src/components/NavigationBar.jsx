@@ -43,10 +43,13 @@ export default class NavigationBar extends Component {
                                         Navigation Four - Link
                                     </a>
                                     </Menu.Item>
+                                    <Link to='/' onClick={() => { context.logout()}}>
+                                        Logout
+                                    </Link>
                                 </Menu>
                             </Route>
                             <Route path='/shopper'>
-                            <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal">
+                                <Menu onClick={this.handleClick} selectedKeys={[current]} mode="horizontal">
                                     <Menu.Item key="mail" icon={<BookTwoTone />}>
                                         Orders
                                         <a href="/shopper/orders"/>
@@ -57,6 +60,9 @@ export default class NavigationBar extends Component {
                                         Navigation Four - Link
                                     </a>
                                     </Menu.Item>
+                                    <Link to='/' onClick={() => { context.logout()}}>
+                                        Logout
+                                    </Link>
                                 </Menu>
                             </Route>
                             <Route path='/visitor'>
@@ -72,6 +78,9 @@ export default class NavigationBar extends Component {
                                         Navigation Four - Link
                                     </a>
                                     </Menu.Item>
+                                    <Link to='/' onClick={() => { context.logout()}}>
+                                        Logout
+                                    </Link>
                                 </Menu>
                             </Route>
                         </Switch>

@@ -36,6 +36,8 @@ create table bookings (
     chips       INTEGER default 0 not null,
     vegetables  INTEGER default 0 not null,
     tomato      INTEGER default 0 not null,
+    availnum    INTEGER default 0 not null,
+    numpizza    INTEGER default 1 not null,
     cost        FLOAT not null
 )
 

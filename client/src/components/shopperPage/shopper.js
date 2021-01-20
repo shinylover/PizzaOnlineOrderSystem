@@ -14,38 +14,49 @@ const DemoBox = props => <p className={`height-${props.value}`}>{props.children}
 export default class Shopper extends Component {
     render() {
         return (
-            <Fragment>
-                <Layout>
-                    <Header>
-                        <NavigationBar/>
-                    </Header>
-                    <Content style={{margin:50}}>
-                        <BrowserRouter>
-                            <Switch>
-                                <Route exact path={'/shopper/orders'} >
+            <AuthContext.Consumer>
+                {(context) => (
+                    <Fragment>
+                        {context.authUser && 
+                        <Fragment>
+
+                            <Layout>
+                                <Header>
+                                    <NavigationBar/>
+                                </Header>
+                                <Content style={{margin:50}}>
+                                    <BrowserRouter>
+                                        <Switch>
+                                            <Route exact path={'/shopper/orders'} >
+                                                
+                                                <ShopperOrders />
+                                                {/* <Divider orientation="left">Align Middle</Divider>
+                                                <Row justify="space-around" align="middle">
+                                                    <Col span={4}>
+                                                        <DemoBox value={100}>
+            
+                                                        </DemoBox>
+            
+                                                    </Col>
+                                                </Row> */}
+                                            </Route>
+                                        </Switch>
                                     
-                                    <ShopperOrders />
-                                    {/* <Divider orientation="left">Align Middle</Divider>
-                                    <Row justify="space-around" align="middle">
-                                        <Col span={4}>
-                                            <DemoBox value={100}>
+                                    </BrowserRouter>
+                                </Content>
+                                <Footer>
+                                    
+                                </Footer>
+                            </Layout>
+                            
+                        </Fragment>
+                        }
 
-                                            </DemoBox>
+                    </Fragment>
 
-                                        </Col>
-                                    </Row> */}
-                                </Route>
-                            </Switch>
-                        
-                        </BrowserRouter>
-                    </Content>
-                    <Footer>
-                        
-                    </Footer>
-                </Layout>
-                
+                )}
+            </AuthContext.Consumer>
 
-            </Fragment>
         )
     }
 }
