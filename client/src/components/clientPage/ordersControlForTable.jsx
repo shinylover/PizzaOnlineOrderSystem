@@ -1,54 +1,54 @@
 import React, { Component, Fragment } from 'react'
 import { Drawer, Button, Col, Row, InputNumber, Collapse, Slider, Space, Divider } from 'antd';
-import { PlusOutlined, EuroCircleOutlined } from '@ant-design/icons';
+import {EuroCircleOutlined} from '@ant-design/icons';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import moment from 'moment'
 
-import { AuthContext } from '../../auth/AuthContext';
+import ClientApi from '../../api/clientApi'
 
 const { Panel } = Collapse;
 var sumForSamll =0
 var sumForMiddle = 0
 var sumForLarge =0
 
-export default class OrdersControl extends Component {
+export default class OrdersControlForTable extends Component {
     constructor(props) {
         super(props)
         this.state = { visible: false,
             optionsS :[
-                { label: 'Olives', value: 1, disabled: false, selected:0},
-                { label: 'Ham', value: 1, disabled: false, selected:0},
-                { label: 'Bacon', value: 1, disabled: false, selected:0 },
-                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
-                { label: 'Egg', value: 1, disabled: false, selected:0},
-                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
-                { label: 'Chips', value: 1, disabled: false, selected:0},
-                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
-                { label: 'Seafood', value: 2, disabled: true, selected:0 },
-                { label: 'Tomato', value: 0, disabled: false, selected:0 }] ,
+                { label: 'olives', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'ham', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'bacon', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'mushrooms', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'egg', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'artichokes', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'chips', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'vegetables', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'seafood', value: 2, disabled: true, selected:0, defaultChecked: false },
+                { label: 'tomato', value: 0, disabled: false, selected:0 , defaultChecked: false}] ,
               optionsM :[
-                { label: 'Olives', value: 1, disabled: false, selected:0},
-                { label: 'Ham', value: 1, disabled: false, selected:0},
-                { label: 'Bacon', value: 1, disabled: false, selected:0 },
-                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
-                { label: 'Egg', value: 1, disabled: false, selected:0},
-                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
-                { label: 'Chips', value: 1, disabled: false, selected:0},
-                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
-                { label: 'Seafood', value: 2, disabled: true, selected:0 },
-                { label: 'Tomato', value: 0, disabled: false, selected:0 }
+                { label: 'olives', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'ham', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'bacon', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'mushrooms', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'egg', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'artichokes', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'chips', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'vegetables', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'seafood', value: 2, disabled: true, selected:0, defaultChecked: false },
+                { label: 'tomato', value: 0, disabled: false, selected:0, defaultChecked: false }
               ] ,
               optionsL :[
-                { label: 'Olives', value: 1, disabled: false, selected:0},
-                { label: 'Ham', value: 1, disabled: false, selected:0},
-                { label: 'Bacon', value: 1, disabled: false, selected:0 },
-                { label: 'Mushrooms', value: 1, disabled: false, selected:0 },
-                { label: 'Egg', value: 1, disabled: false, selected:0},
-                { label: 'Artichokes', value: 1, disabled: false, selected:0 },
-                { label: 'Chips', value: 1, disabled: false, selected:0},
-                { label: 'Vegetables', value: 1, disabled: false, selected:0 },
-                { label: 'Seafood', value: 2, disabled: false, selected:0 },
-                { label: 'Tomato', value: 0, disabled: false, selected:0 }
+                { label: 'olives', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'ham', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'bacon', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'mushrooms', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'egg', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'artichokes', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'chips', value: 1, disabled: false, selected:0, defaultChecked: false},
+                { label: 'vegetables', value: 1, disabled: false, selected:0, defaultChecked: false },
+                { label: 'seafood', value: 2, disabled: false, selected:0, defaultChecked: false },
+                { label: 'tomato', value: 0, disabled: false, selected:0, defaultChecked: false }
               ] ,
               ordine: {
                   order: null,
@@ -58,6 +58,10 @@ export default class OrdersControl extends Component {
               inputValueForM: 0,
               inputValueForL: 0,
               price: 0,
+              bookings: [],
+              maxNumForS: 10,
+              maxNumForM: 8,
+              maxNumForL: 6,
             };
     }
     state = { visible: false };
@@ -92,7 +96,7 @@ export default class OrdersControl extends Component {
         }
         if (this.state.inputValueForM !==0){
             bookings[1] = {
-                ref_pizza: 2,
+                ref_pizza: 1,
                 olives: this.state.optionsM[0].selected,
                 ham: this.state.optionsM[1].selected,
                 bacon: this.state.optionsM[2].selected,
@@ -110,7 +114,7 @@ export default class OrdersControl extends Component {
         }
         if (this.state.inputValueForL !==0) {
             bookings[2] = {
-                ref_pizza: 3,
+                ref_pizza: 1,
                 olives: this.state.optionsL[0].selected,
                 ham: this.state.optionsL[1].selected,
                 bacon: this.state.optionsL[2].selected,
@@ -216,7 +220,6 @@ export default class OrdersControl extends Component {
       };
     
     selectToppings = (k)=>{
-        // TODO: slected
         let arr = this.state.optionsS
         arr[k] = JSON.parse(JSON.stringify(arr[k]))
         arr[k].selected = '1'
@@ -225,9 +228,6 @@ export default class OrdersControl extends Component {
             optionsS: arr
         })
     }
-    // componentDidMount(){
-
-    // }
 
     onChangeCheckBoxForM =(key)=>{
         const _options = this.state.optionsM
@@ -390,16 +390,170 @@ export default class OrdersControl extends Component {
         
     // }
 
+    getBookings = ()=>{
+        ClientApi.getBookings(this.props.order.oid)
+            .then((bookings) => {
+                this.setState({
+                    bookings: bookings
+                }, ()=>{
+                    if(this.props.order.states===3 || this.props.order.states===2)
+                    this.updateOptions()
+                })
+            })
+            .catch((err) => {
+                alert(err)
+            })
+    }
+
+    // TODO:
+    updateOptions = ()=> {
+        const {bookings, optionsL, optionsM, optionsS} = this.state;
+        if(this.props.order.states>=2){
+            this.setState({
+                price: this.props.order.sum
+            })
+        }
+        for(let booking of bookings){
+            if(booking.ref_pizza === 1){
+                const _options = optionsS
+                if(booking.olives===1){
+                    _options[0].selected = 1
+                    _options[0].defaultChecked = true
+                } if(booking.ham===1){
+                    _options[1].selected = 1
+                    _options[1].defaultChecked = true
+                }if(booking.bacon===1){
+                    _options[2].selected = 1
+                    _options[2].defaultChecked = true
+                }if(booking.mushrooms===1){
+                    _options[3].selected = 1
+                    _options[3].defaultChecked = true
+                }if(booking.egg===1){
+                    _options[4].selected = 1
+                    _options[4].defaultChecked = true
+                }if(booking.artichokes===1){
+                    _options[5].selected = 1
+                    _options[5].defaultChecked = true
+                }if(booking.chips===1){
+                    _options[6].selected = 1
+                    _options[6].defaultChecked = true
+                }if(booking.vegetables===1){
+                    _options[7].selected = 1
+                    _options[7].defaultChecked = true
+                }if(booking.seafood===1){
+                    _options[8].selected = 1
+                    _options[8].defaultChecked = true
+                }if(booking.tomato===1){
+                    _options[9].selected = 1
+                    _options[9].defaultChecked = true
+                }
+                alert(_options[3].selected, _options[3].defaultChecked)
+                console.log('----------------',_options[3].selected, _options[3].defaultChecked);
+                this.setState({
+                    optionsS: [..._options],
+                    inputValueForS: booking.numpizza,
+                    maxNumForS: booking.available
+                })
+            } else if(booking.ref_pizza === 2){
+                const _options = optionsM
+                if(booking.olives===1){
+                    _options[0].selected = 1
+                    _options[0].defaultChecked = true
+                } if(booking.ham===1){
+                    _options[1].selected = 1
+                    _options[1].defaultChecked = true
+                }if(booking.bacon===1){
+                    _options[2].selected = 1
+                    _options[2].defaultChecked = true
+                }if(booking.mushrooms===1){
+                    _options[3].selected = 1
+                    _options[3].defaultChecked = true
+                }if(booking.egg===1){
+                    _options[4].selected = 1
+                    _options[4].defaultChecked = true
+                }if(booking.artichokes===1){
+                    _options[5].selected = 1
+                    _options[5].defaultChecked = true
+                }if(booking.chips===1){
+                    _options[6].selected = 1
+                    _options[6].defaultChecked = true
+                }if(booking.vegetables===1){
+                    _options[7].selected = 1
+                    _options[7].defaultChecked = true
+                }if(booking.seafood===1){
+                    _options[8].selected = 1
+                    _options[8].defaultChecked = true
+                }if(booking.tomato===1){
+                    _options[9].selected = 1
+                    _options[9].defaultChecked = true
+                }
+                this.setState({
+                    optionsM:[..._options],
+                    inputValueForM: booking.numpizza,
+                    maxNumForM: booking.available
+                })
+
+            } else if(booking.ref_pizza === 3){
+                const _options = optionsL
+                if(booking.olives===1){
+                    _options[0].selected = 1
+                    _options[0].defaultChecked = true
+                } if(booking.ham===1){
+                    _options[1].selected = 1
+                    _options[1].defaultChecked = true
+                }if(booking.bacon===1){
+                    _options[2].selected = 1
+                    _options[2].defaultChecked = true
+                }if(booking.mushrooms===1){
+                    _options[3].selected = 1
+                    _options[3].defaultChecked = true
+                }if(booking.egg===1){
+                    _options[4].selected = 1
+                    _options[4].defaultChecked = true
+                }if(booking.artichokes===1){
+                    _options[5].selected = 1
+                    _options[5].defaultChecked = true
+                }if(booking.chips===1){
+                    _options[6].selected = 1
+                    _options[6].defaultChecked = true
+                }if(booking.vegetables===1){
+                    _options[7].selected = 1
+                    _options[7].defaultChecked = true
+                }if(booking.seafood===1){
+                    _options[8].selected = 1
+                    _options[8].defaultChecked = true
+                }if(booking.tomato===1){
+                    _options[9].selected = 1
+                    _options[9].defaultChecked = true
+                }
+                
+                this.setState({
+                    optionsL:[..._options],
+                    inputValueForL: booking.numpizza,
+                    maxNumForL: booking.available
+                })
+            }
+        }
+    }
+
+    componentDidMount(){
+        this.getBookings()
+        
+    }
+
     render() {
-        const { inputValueForS, inputValueForM, inputValueForL } = this.state;
+        const { inputValueForS, inputValueForM, inputValueForL, maxNumForS, maxNumForM, maxNumForL } = this.state;
+        const {order } = this.props;
         return (
             // <AuthContext.Consumer>
             //     <Fragment>
                     // {(context)=>
 
                         <Fragment>
-                        <Button type="primary" onClick={this.showDrawer}>
-                            <PlusOutlined /> Order Now!
+                        <Button type="primary" onClick={this.showDrawer}
+                         disabled={order.states >=2 ? false: true}
+                         >
+                            {order.states===0? "Waiting" : order.states===1 ? "Delivering" :  order.states===2 ? "Edit": "Details"}
                         </Button>
                         <Drawer
                         title="Create A New Order"
@@ -422,7 +576,7 @@ export default class OrdersControl extends Component {
                                     <Button onClick={this.onClose} style={{ marginRight: 8 }}>
                                         Cancel
                                     </Button>
-                                    <Button onClick={this.makeOrdine} type="primary">
+                                    <Button onClick={this.makeOrdine} disabled={order.states===3 ? true: false} type="primary">
                                         Submit
                                     </Button>
                                 </Space>
@@ -437,7 +591,11 @@ export default class OrdersControl extends Component {
                                     Choose 2 toppings:
                                     </Col>
                                     <Divider/>
-                                    {this.state.optionsS.map((s,kForSmall) => {return <Col span={7}><Checkbox onChange={this.onChangeCheckBox.bind(this, kForSmall)} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                                    {this.state.optionsS.map((s,kForSmall) => {return <Col span={7}><Checkbox 
+                                                                                                    onChange={this.onChangeCheckBox.bind(this, kForSmall)} 
+                                                                                                    disabled={s.disabled}
+                                                                                                    defaultChecked={s.defaultChecked}
+                                                                                                    >{s.label}</Checkbox></Col>})}
                                     <Divider/>
                                     <Col  span={24}>
                                     Pizza number:
@@ -449,7 +607,7 @@ export default class OrdersControl extends Component {
                                     <Col span={4}>
                                         <InputNumber
                                             min={0}
-                                            max={this.props.pizzas[0].available}
+                                            max={order.states===2? this.props.pizzas[0].available: maxNumForS}
                                             style={{ margin: '0 16px' }}
                                             value={inputValueForS}
                                             onChange={this.onChangeSliderForS}
@@ -468,7 +626,11 @@ export default class OrdersControl extends Component {
                                     Chose 3 toppings:
                                     </Col>
                                     <Divider dashed={true}/>
-                                    {this.state.optionsM.map((s,kForMiddle) => {return <Col span={7}><Checkbox onChange={this.onChangeCheckBoxForM.bind(this, kForMiddle)} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                                    {this.state.optionsM.map((s,kForMiddle) => {return <Col span={7}><Checkbox 
+                                                                                                    onChange={this.onChangeCheckBoxForM.bind(this, kForMiddle)} 
+                                                                                                    disabled={s.disabled}
+                                                                                                    defaultChecked={s.defaultChecked}
+                                                                                                    >{s.label}</Checkbox></Col>})}
                                     <Divider/>
                                     <Col  span={24}>
                                     Pizza number:
@@ -480,7 +642,7 @@ export default class OrdersControl extends Component {
                                     <Col span={4}>
                                         <InputNumber
                                             min={0}
-                                            max={this.props.pizzas[1].available}
+                                            max={order.states===2? this.props.pizzas[1].available: maxNumForS}
                                             style={{ margin: '0 16px' }}
                                             value={inputValueForM}
                                             onChange={this.onChangeSliderForM}
@@ -496,7 +658,11 @@ export default class OrdersControl extends Component {
                                     Chose 6 toppings:
                                     </Col>
                                     <Divider dashed={true}/>
-                                    {this.state.optionsL.map((s,kForLarge) => {return <Col span={7}><Checkbox onChange={this.onChangeCheckBoxForL.bind(this, kForLarge)} disabled={s.disabled}>{s.label}</Checkbox></Col>})}
+                                    {this.state.optionsL.map((s,kForLarge) => {return <Col span={7}><Checkbox 
+                                                                                                    onChange={this.onChangeCheckBoxForL.bind(this, kForLarge)} 
+                                                                                                    disabled={s.disabled}
+                                                                                                    defaultChecked={s.defaultChecked}
+                                                                                                    >{s.label}</Checkbox></Col>})}
                                     <Divider/>
                                     <Col  span={24}>
                                     Pizza number:
@@ -508,7 +674,7 @@ export default class OrdersControl extends Component {
                                     <Col span={4}>
                                         <InputNumber
                                             min={0}
-                                            max={this.props.pizzas[2].available}
+                                            max={order.states===2? this.props.pizzas[2].available: maxNumForS}
                                             style={{ margin: '0 16px' }}
                                             value={inputValueForL}
                                             onChange={this.onChangeSliderForL}

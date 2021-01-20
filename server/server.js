@@ -30,6 +30,7 @@ app.post('/loginApi/login', (req, res) => {
     const password = req.body.password;
     loginDao.getUserByEmail(email)
         .then((user) => {
+            console.log(user);
             if (user === undefined){
                 res.statuses(404).send({
                     errors: [ {'param': 'Server', 'message': 'Invalid e-mail'} ]
@@ -103,7 +104,7 @@ app.get( '/loginApi/user', ( req, res ) => {
 app.get( '/clientApi/getPizzaInfos', (req, res) => {
     clientDao.getAvailableNums()
         .then( ( pizzas ) => {
-            console.log(pizzas);
+            
             res.json(pizzas)
         })
         .catch( ( err)=>{
@@ -113,5 +114,51 @@ app.get( '/clientApi/getPizzaInfos', (req, res) => {
         } )
 })
 
+// To make a ordine in DB
+app.put( '/clientApi/makeOrdine', (req, res) => {
+    let body = req.body
+    clientDao.makeOrdine(body)
+        .then( () =>{
+            res.status(200).json({
+                message: '/clientApi/makeOrdine OK!'
+            })
+        })
+        .catch( ( err)=>{
+            console.log('From server', err);
+            res.status(500).json( {
+                errors: 'Server err /clientApi/makeOrdine'
+            })
+        } )
+})
+
+// To get all the orders of a client 
+app.get('/clientApi/getOrders/:email', (req, res) => {
+    const email = req.params.email
+    clientDao.getOrders(email)
+        .then( (rows) => {
+            res.status(200).json(rows)
+        })
+        .catch( ( err)=>{
+            console.log('From server', err);
+            res.status(500).json( {
+                errors: 'Server err, /clientApi/getOrders'
+            })
+        } )
+})
+
+// To get all bookings of a order
+app.get('/clientApi/getBookings/:orderId', (req, res) =>{
+    const orderId = req.params.orderId
+    clientDao.getBookings(orderId)
+        .then( (rows) => {
+            res.status(200).json(rows)
+        })
+        .catch( ( err)=>{
+            console.log('From server', err);
+            res.status(500).json( {
+                errors: 'Server err, /clientApi/getOrders'
+            })
+        } )
+})
 
 app.listen(PORT, ()=>console.log(`Server running on http://localhost:${PORT}/`));

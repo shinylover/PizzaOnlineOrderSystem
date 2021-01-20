@@ -1,91 +1,96 @@
 import React, { Component, Fragment } from 'react'
 import { Card, Table,  Tag, Space} from 'antd';
 
-import OrdersControl from './ordersControl'
 
+import ClientApi from '../../api/clientApi'
+import OrderItem from './orderItem';
 
-const { Meta } = Card;
-
-const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <a>{text}</a>,
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <OrdersControl/>
-        </Space>
-      ),
-    },
-  ];
+  // const columns = [
+  //   {
+  //     title: 'Order Number',
+  //     dataIndex: 'oid',
+  //     // key: 'name',
+  //     // render: text => <a>{text}</a>,
+  //   },
+  //   {
+  //     title: 'Order Time',
+  //     dataIndex: 'timestam'
+  //   },
+  //   {
+  //     title: 'Actions',
+  //     key: 'action',
+  //     render: (text, record) => (
+  //       <Space size="middle">
+  //         <a>Invite {record.name}</a>
+  //         {/* <OrdersControl /> */}
+  //       </Space>
+  //     ),
+  //   },
+  // ];
 
 export default class ClientOrders extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        orders: [],
+        bookings:[],
+      }
+    }
+
+    // get all the orders of a client 
+  getOrders = () => {
+    ClientApi.getOrders(this.props.email)
+        .then((result) => {
+            this.setState({
+                orders: result
+            })
+        })
+        .catch((err) => {
+            this.handleErrors(err)
+        })
+  }
+
+  handleErrors = (err) => {
+    if (err) {
+        if (err.status && err.status ===401) {
+            this.setState({ authErr: err });
+            this.props.history.push("/");
+        } else {
+            this.setState({
+                authErr: err
+            })
+        }
+    } 
+  }
+  componentDidMount(){
+    this.getOrders();
+  }
     render() {
         return (
             // TODO: add authUser
             <Fragment>
-                <Table columns={columns} dataSource={data} />
-                
+                {/* <Table columns={columns} 
+                dataSource={this.state.orders}
+                // onRow = { (record) => ({
+                //   onClick: () => <OrdersControl/>
+                // })} 
+                /> */}
+                <table border="1" cellspacing="1000"  width="400">
+                  <thead>
+                    <tr>
+                      
+                      <th>Order Number</th>
+                      <th>Order Time</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                      
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.orders.map((o, key) =><OrderItem order ={o} num={key} pizzas={this.props.pizzas}/>)}
+                  </tbody>
+                </table>
             </Fragment>
         )
     }

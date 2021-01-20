@@ -14,6 +14,7 @@ exports.getUserByEmail = function (email1) {
             if( err ) {
                 reject(err)
             } else if (row) {
+                
                 let user = new User(row.uid, row.email, row.password, row.type)
                 console.log('------------- loginDao17---user',user)
                 resolve(user)
@@ -32,7 +33,7 @@ exports.getUserById = function (id) {
                 reject(err)
             } else if (row){
                 let user = new User(row.id, row.email, row.password, row.type)
-                resolve(row)
+                resolve(user)
             } else {
                 resolve(undefined)
             }

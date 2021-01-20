@@ -20,6 +20,8 @@ export default class Client extends Component {
         super(props)
         this.state = {
             pizzas:[],
+            orders:[],
+            bookings:[],
         }
     }
 
@@ -36,6 +38,32 @@ export default class Client extends Component {
         } 
     }
 
+    putMakeOrdine = (ordine) =>{
+        ClientApi.putMakeOrdine(ordine)
+            .then((result) => {
+                alert('putMakeOrdine, ok')
+            })
+            .catch((err) => {
+                this.handleErrors(err)
+            })
+    }
+
+    // get all the orders of a client 
+    getOrders = (email) => {
+        if(email){
+            ClientApi.getOrders()
+                .then((result) => {
+                    this.setState({
+                        orders: result
+                    })
+                })
+                .catch((err) => {
+                    this.handleErrors(err)
+                })
+        }
+    }
+
+
     getPizzaInfos = () =>{
         ClientApi.getPizzaInfos()
             .then((result) => {
@@ -49,11 +77,11 @@ export default class Client extends Component {
     }
 
     componentDidMount(){
-        
+        this.getPizzaInfos()
         this.timeId = setInterval(() => {
             this.getPizzaInfos()
         }, 5000)
-        this.getPizzaInfos()
+        
     }
 
     render() {
@@ -79,11 +107,18 @@ export default class Client extends Component {
                                                             Discount Informations!
                                                         </Button>
                                                     </Tooltip>
-                                                    <OrdersControl pizzas={this.state.pizzas}/>
+                                                    <OrdersControl
+                                                    pizzas={this.state.pizzas} 
+                                                    email = {context.authUser.email}
+                                                    putMakeOrdine = {this.putMakeOrdine}
+                                                    />
                                                 </Space>
                                             </Route >
                                             <Route exact path={'/client/orders'}>
-                                                <ClientOrders />
+                                                <ClientOrders 
+                                                pizzas={this.state.pizzas}
+                                                email = {context.authUser.email}
+                                                 />
                                             </Route>
                                         </Switch>
                                     </BrowserRouter>

@@ -32,7 +32,7 @@ class App extends React.Component{
   login = (email, password)=> {
     LoginApi.login(email, password).then((user)=> {
       this.setState({
-        authUser: new User(user.id, user.email,user.type),
+        authUser: new User(user.id, user.email, user.type),
         authErr: null
       })
     }).catch( (err) => {
@@ -63,7 +63,7 @@ class App extends React.Component{
               <Login/>
             </Route>
             <Route path='/client'>
-              <Client/>
+              <Client />
             </Route>
             <Route  path='/shopper'>
               <Shopper/>
