@@ -1,6 +1,6 @@
 # Exam #4: "Pizza"
 
-## Student: s274816 FEIHONG FIRSTNAME
+## Student: s274816 FEIHONG SHI
 
 ## React client application routes
 
