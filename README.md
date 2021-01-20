@@ -89,7 +89,16 @@
 
 ## Screenshot
 
-![Configurator Screenshot](./img/screenshot.jpg)
+![Configurator Screenshot](./img/historyOrdersClient.png)
+
+![Configurator Screenshot](./img/makeAOrdine.png)
+
+![Configurator Screenshot](./img/menuClient.png)
+
+![Configurator Screenshot](./img/orderListShopper.png)
+
+![Configurator Screenshot](./img/updateStatusShopper.png)
+
 
 ## Test users
 
