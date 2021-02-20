@@ -1,6 +1,6 @@
 const baseURL = "/visitorApi"
 
-async function getPizzaInfos() {
+async function getPizzaInfos() { // get the available numbers for current time 
     const response = await fetch(baseURL + "/getPizzaInfos")
     const pizzasJson = await response.json()
     if (response.ok) {

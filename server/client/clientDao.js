@@ -15,7 +15,7 @@ const getUserId = function (email) {
     })
 }
 
-exports.getAvailableNums = function (){
+exports.getAvailableNums = function (){ // get the avialable numbers of the menu page
     return new Promise( (resolve, reject) => {
         let sql = `SELECT * FROM pizza`
         db.all(sql, [], (err, rows) => {

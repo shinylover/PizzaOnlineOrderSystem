@@ -1,6 +1,6 @@
 const baseURL = "/shopperApi"
 
-async function getPizzaInfos() {
+async function getPizzaInfos() { // get pizza infos for the order  controler
     const response = await fetch(baseURL + "/getPizzaInfos")
     const pizzasJson = await response.json()
     if (response.ok) {
@@ -11,7 +11,7 @@ async function getPizzaInfos() {
     }
 }
 
-async function getOrders() {
+async function getOrders() { // get all the orsers for the shopper
     const response = await fetch(baseURL + "/getOrders")
     const ordersJson = await response.json()
     if (response.ok) {
@@ -34,7 +34,7 @@ async function getOrders() {
     }
 }
 
-async function getBookings(orderId) {
+async function getBookings(orderId) { // get all the bookings for the current order 
     const response = await fetch(baseURL +'/getBookings/' + orderId)
     const bookingsJson = await response.json()
     if (response.ok) {
@@ -57,7 +57,7 @@ async function getBookings(orderId) {
     }
 }
 
-async function changeStates(orderId, states) {
+async function changeStates(orderId, states) { // change the state for the current order
     return new Promise((resolve, reject) => {
         fetch(baseURL + '/changeStates/' + orderId, {
             method: 'POST',

@@ -82,7 +82,7 @@ if (err.name === 'UnauthorizedError') {
 });
     
 //API for check authenticated User
-app.get( '/loginApi/user', ( req, res ) => {
+app.get( '/loginApi/user', ( req, res ) => { // check user 
     const userRequest = req.user && req.user.user;
     console.log('----------------test /loginApi/user----------');
     loginDao.getUserById( userRequest )

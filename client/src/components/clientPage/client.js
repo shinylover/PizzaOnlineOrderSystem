@@ -40,7 +40,7 @@ export default class Client extends Component {
     }
 
     // TODO: 
-    handleCurrent = (current)=>{
+    handleCurrent = (current)=>{ // did not use, plan to hight light the current nav button
         this.setState({
             current: current
         })
@@ -89,7 +89,7 @@ export default class Client extends Component {
         this.getPizzaInfos()
         for(let i = 0; i <10000; i++){
             let item = 1
-            // cost cpu resource 
+            // cost cpu resource // did not useful
         }
         this.timeId = setInterval(() => {
             this.getPizzaInfos()
@@ -120,7 +120,7 @@ export default class Client extends Component {
                                                             Discount Informations!
                                                         </Button>
                                                     </Tooltip>
-                                                    <OrdersControl
+                                                    <OrdersControl // order controler
                                                     pizzas={this.state.pizzas} 
                                                     email = {context.authUser.email}
                                                     putMakeOrdine = {this.putMakeOrdine}
@@ -128,7 +128,7 @@ export default class Client extends Component {
                                                 </Space>
                                             </Route >
                                             <Route exact path={'/client/orders'}>
-                                                <ClientOrders 
+                                                <ClientOrders // order menu
                                                 pizzas={this.state.pizzas}
                                                 email = {context.authUser.email}
                                                 putMakeOrdine = {this.putMakeOrdine}

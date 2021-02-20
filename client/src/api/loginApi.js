@@ -29,7 +29,7 @@ async function login(email, password) {
     })
 }
 
-async function logout() {
+async function logout() { // used to clear the cookies 
     return new Promise((resolve, reject) => {
         fetch( baseURL + '/logout', {
             method: 'POST',
@@ -48,7 +48,7 @@ async function logout() {
     })
 }
 
-async function isAuthenticated() {
+async function isAuthenticated() { // check current account is authenticated or not for the cookie
     const response = await fetch(baseURL + "/user")
     const userJson = await response.json()
     if ( response.ok){

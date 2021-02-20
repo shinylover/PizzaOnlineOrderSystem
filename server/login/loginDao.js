@@ -25,7 +25,7 @@ exports.getUserByEmail = function (email1) {
     })
 }
 
-exports.getUserById = function (id) { 
+exports.getUserById = function (id) {  // '/loginApi/user'
     return new Promise( (resolve, reject) => {
         let sql = `SELECT * FROM user WHERE uid = ${id}`
         db.get(sql, [], (err, row) => {

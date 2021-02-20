@@ -3,7 +3,7 @@ const PizzasE = require('../entities/PizzasE')
 
 const baseURL = "/clientApi"
 
-async function getPizzaInfos() {
+async function getPizzaInfos() { // get the pizza infos on time 
     const response = await fetch(baseURL + "/getPizzaInfos")
     const pizzasJson = await response.json()
     if (response.ok) {
@@ -14,7 +14,7 @@ async function getPizzaInfos() {
     }
 }
 
-async function putMakeOrdine(ordine) {
+async function putMakeOrdine(ordine) {  // make a ordine: JSON type
     return new Promise((resolve, reject) => {
         fetch(baseURL + "/makeOrdine", {
             method: 'PUT',
@@ -47,7 +47,7 @@ async function putMakeOrdine(ordine) {
 }
 
 // get all the orders of a client 
-async function getOrders(email) {
+async function getOrders(email) {  // get orders of a client for the order page 
     const response = await fetch(baseURL + '/getOrders/' + email)
     const ordersJson = await response.json()
     if (response.ok) {
@@ -70,7 +70,7 @@ async function getOrders(email) {
     }
 }
 
-async function getBookings(orderId) {
+async function getBookings(orderId) {  // get all the bookings by a order id
     const response = await fetch(baseURL +'/getBookings/' + orderId)
     const bookingsJson = await response.json()
     if (response.ok) {
@@ -93,7 +93,7 @@ async function getBookings(orderId) {
     }
 }
 
-async function changeStates(orderId, states) {
+async function changeStates(orderId, states) { //change the state of a order 
     return new Promise((resolve, reject) => {
         fetch(baseURL + '/changeStates/' + orderId, {
             method: 'POST',
